@@ -1,0 +1,881 @@
+hey there how's it going everybody in this video we'll be learning how to use our application to add users to our database and also how to authenticate
+0:06
+users so that they can log in log out and also soon be able to create posts
+0:11
+and things like that so let's go ahead and get started so in a previous video we created our database and saw how we
+0:17
+could manually create some users and posts but now let's add that same logic to our application to create these users
+0:24
+through the registration form now before we create our users we're going to need a way to hash our passwords so in the
+0:31
+previous video we were using plain text passwords for our examples but you never want to do this with your actual website
+0:37
+because if anyone was to ever get access to your database then they would have the logins for all of your users and
+0:45
+that's definitely not a good thing so there are several different hashing algorithms but one good one that we can
+0:50
+use is called bcrypt and there's an extension for flask that makes this easy to use and that is
+0:55
+called flask bcrypt so let's pull up our command line and install this with pip so I have my
+1:01
+virtual environment activated and I'm here in my project directory and I'm going to install this just by saying pip
+1:06
+install and this is flask - be crypt so let's install that and once that is
+1:12
+installed I'm going to clear my screen here and now let's open up python from
+1:18
+our command line and see how this works so i'm going to import the bcrypt class from that flask extension so i'll say
+1:24
+from flask underscore bcrypt import this bcrypt class and now we'll create an
+1:31
+instance of that class will say bcrypt is equal to this class and put in those
+1:37
+parentheses there and now let's hash a password so we can say be crypt and we
+1:42
+can use the generate password hash method and then pass in a password and
+1:48
+I'll just pass in a password of testing for now and we can see that this created a password hash in this be here at the
+1:55
+beginning means that this is in bytes now on the extensions documentation page they say if you want a string then you
+2:01
+can simply decode this to utf-8 so if I rerun that password hash and do a decode
+2:08
+of utf-8 then now we can see that we
+2:13
+a similar hash but there is no longer to be at the beginning there so that's just a regular string okay so one thing to
+2:19
+notice here is that each time I run this I get a different hash even when using the same password so if I do this again
+2:26
+then this hash is different than the one before and if I do it again then it's completely different than the one before
+2:32
+so this means that if someone was to steal this from your database then they wouldn't even be able to use a hash
+2:37
+table to crack these passwords so if it's a different hash every time then
+2:43
+how can we verify if the user enters the correct password if we just hash they're entered password and can compare it to
+2:49
+what we have stored in the database then those will most likely be different so we need to use another method called
+2:56
+check password hash in order to check if those passwords are equal so I'm going
+3:01
+to save this hash password as a variable so I'll rerun this again and I'll just
+3:06
+say that this is our hashed password and remember the password that we used there
+3:11
+was the string of testing so now let me clear this out so we have some more room
+3:16
+here and now let's check a few passwords against this hashed password so if I say be dot check password hash then
+3:27
+first we want to pass in the hashed password so I'll pass in that hashed password and now let's compare this
+3:33
+against a password of password so this should return false since our hash
+3:38
+password was originally testing so we can see that we did get a false value there but if I pass in testing and check
+3:46
+that then that gives us a true so that is how we are going to hash and verify
+3:52
+passwords so let's add this to our application initialization so I will
+3:57
+exit out of this and clear my terminal and now let's open up our project and I
+4:05
+am within my package and knit dot pie file here where we are initializing our
+4:10
+application and now to initialize this it's going to be pretty similar to SQL alchemy here so we'll just say from
+4:16
+flask bcrypt import that bcrypt class and then down here at the bottom
+4:23
+we will say be crypt is equal to decrypt and we want to pass in that app
+4:29
+to that bcrypt class to initialize that okay so now let's open up our routes and
+4:35
+see what our current registration logic is so if I go to the routes and go to
+4:40
+our registration route here and I'm going to make this text a little larger so we can see better here okay so right
+4:48
+now we are checking if this form is valid on submit and if it is then we
+4:54
+flash a message that an account has been created for the user but we're currently
+5:00
+but we aren't currently creating that account so let's do that so if the form is valid on submit then
+5:07
+first let's hash the password that they entered so that it's ready for us to save it to the bait database so first we
+5:15
+need to import bcrypt and the DB variables and remember if we're
+5:20
+importing from our package then it's going to import it from that Annette PI file but we can just simply write that
+5:26
+as if we're importing from the package itself so we're already importing this app from that package so now we need to
+5:33
+also import the DB and our bcrypt okay so now let's go back down to our
+5:39
+registration route and inside of our validate on submit conditional here and
+5:45
+this will basically be the same thing that we just saw a second ago in the command line so I will say hashed
+5:50
+password is equal to be crypt dot generate hashed well actually that is
+5:57
+generate password hash and then we want to pass in the password that we want to
+6:04
+hash and this is going to be whatever they insert into the password field so
+6:10
+that is form dot password dot data and now remember if we want this to be a string instead of bytes then we can do a
+6:17
+dot decode of utf-8 and I'm going to close the sidebar here so that we can
+6:23
+see more of this line okay so now that we have a hashed password now we can create a new instance of a user and we
+6:30
+saw how to do this in a previous video so we can do this just by going to the
+6:36
+next line and creating a new user so I'll say user is equal to user and now we have to pass in all
+6:44
+of the fields so we want the username of this user to be equal to the information
+6:50
+that they passed into the username of fields audio username data and now we
+6:56
+want to set the email of this user equal to form email data and then we can set
+7:03
+the password for this user and that password is going to be equal to our hashed password we don't want to pass in
+7:10
+the data that they passed to the form because that will be the plain text password we want the hashed version of
+7:16
+that okay so once we have that user created then we can go to the next line
+7:22
+here and add this user to the changes that we want to make to our database so we can do this by saying DB session dot
+7:31
+add and then adding that user and now we also want to commit those changes it's
+7:36
+only one change so we can say DB session dot commit okay so that will add the
+7:42
+user to the database now let's flash them a message telling them that their account has been created and that they can now log in so instead
+7:49
+of the message that we currently have here I am instead going to pass in a
+7:56
+message it just says your account has been created you are now able to log in
+8:05
+and again we'll keep that success category there because that is the bootstrap class and now instead of
+8:11
+returning them to the home route let's return them to the login route so that they can login with that newly created
+8:16
+account okay so now let's see if this part worked so let's start up our website so I'll bring up our terminal
+8:23
+here our command line and I'll run this application just like we've seen before with Python run dot pi so our server is
+8:30
+running we didn't get any airs so I will open this up ok and the website looks
+8:36
+good so now if I go to the registration page so if I click sign up with nothing there
+8:41
+we can see that the validation is still working so that's good and now let me just create a dummy user here so Cory M
+8:49
+s and Cory M Schaefer at gmail.com and the password I'll just put in
+8:54
+as testing so let's sign up okay so with valid form information we can see that
+8:59
+we now got redirected to the login page was not with our flashed message telling us that we can now login now our logins
+9:06
+still aren't working but it looks like our user was added to the database but let's make sure of that though so I'm
+9:12
+going to bring up my command line and stop our site from running so I will
+9:18
+kill that with control C now I'm going to clear this and I'll start up Python and import our database user model so I
+9:26
+will say from flask blog import DB and we also want to import our user model so
+9:34
+we'll say from flask blog dot models import user and now let's grab the first
+9:41
+user out of this table so I'll say user is equal to user query dot first and we
+9:48
+saw how to do this in a previous video so if you haven't watched our database video then you might want to watch that to understand what these queries are
+9:54
+doing okay so now let's print out that user and we can see that we got a user with the username of core DMS the email
+10:03
+of khorium Schaefer at gmail.com and our default JPEG profile picture so now let's look at the password for this user
+10:09
+so if I say user dot password then we can see that we do get a hashed version
+10:14
+of a password and that's exactly what we wanted okay so that's good but if we go
+10:20
+back to our application then there's actually something wrong with how we have this right now that might not be
+10:26
+obvious right off the bat so currently our registration form will validate against things like bad emails and empty
+10:33
+fields but there's nothing stopping a user from trying to sign up with a username or email that already exists in
+10:40
+our database now we have a restriction set on our database models that say that
+10:46
+those have to be unique but that won't be caught or throw an error until we try to add that new user to the database so
+10:53
+let's see what this looks like if we were to try to add another user or email that currently already exists so let's
+11:00
+start up the website again so I will go back here and close out of the Python interpreter and
+11:06
+rerun our application and now let's go back to our application and go to the
+11:12
+registration route and now I'm just going to try to sign up with these same credentials that I used before so that
+11:18
+was for EMS and Cory M Schaefer at gmail.com with password here and sign up
+11:27
+and you can see that we get this ugly error screen where it says that we had an SQL alchemy integrity air and that
+11:35
+the unique constraint has failed and it also prints out the stack trace here of
+11:41
+all the code that led up to this air now this is the first time that we've seen an error screen like this this is what
+11:46
+happens when flask throws an error and you're running in debug mode this information can be extremely useful for
+11:52
+debugging problems in your application but this is also why you don't want to be why you want to be absolutely sure
+11:58
+that you're never running in debug mode when you deploy your website publicly because this is just too much
+12:04
+information to expose to other people you can actually come to the bottom of the stack trace and run Python code to
+12:11
+dig further into the problem and you need the debugger pin from your console to do this but it's still risky having
+12:17
+that capability so for example if I wanted to debug this line here where we did the DB session dot commit then I
+12:25
+could just click on that line or click on the option over here to the right
+12:31
+where it says to run code here so if I click on that then it'll ask for the debug or pin and if I pull up our
+12:39
+terminal and scroll up here a bit when we first started our server we can see
+12:46
+that it has a debug or pin here so I'll copy that and paste that into our
+12:51
+debugger on the site and now we can actually run Python code here within the browser to see the context of what the
+12:58
+variables were at this point in the application so if I was to print out user and we can see what our user
+13:05
+variable was at that point so user dot email so we can see that we can get
+13:10
+information back so again that can be useful to debug certain problems but it's also why you don't want to be in
+13:17
+debug mode when you're in production okay so now we need to catch the failure that we
+13:22
+saw here before we get to this ugly air screen now you might think that it's best to go into our register route here
+13:30
+and add in some database checks after our form is validated to see if the
+13:36
+username or email already exists in our database and that would be one way to do it but I think that the best way to do
+13:42
+this would be to add our own custom validation for the register form that way it gets checked when we actually try
+13:49
+to validate the form and we'll return the visual feedback of the error messages like we've seen before so how
+13:55
+do we do this now I got this from the WT form documentation so if we open up our
+14:02
+forms file so I open up my side bar here and open up our forms module to do this
+14:07
+we want to come inside of our registration form here and go down and now we can create a custom validation
+14:14
+simply by creating a function within this form so I'll type this out and we
+14:19
+can go over it so this is going to say this is going to be a function of validate field and take self and field
+14:28
+as arguments there then we'll say if true raised validation error and we're
+14:37
+also going to want a error validation message so validation message okay so
+14:43
+what I just created here is basically a template for our validation methods so
+14:49
+we're going they're going to be in this format so validate and then we're going to put the field name here that we want
+14:54
+to validate and then also pass in at the field name here as an argument and then we're going to have some kind of
+15:01
+conditional so this just says if true for now but we'll add in some type of conditional and if it meets that
+15:07
+condition then we can raise a validation error with a validation message and I think this will be more clear once we
+15:13
+customize this to our needs so let's do that now so we want to validate the user name field so we can change this field
+15:21
+name to be user name and we also changed that argument to use your name there and
+15:27
+the condition that we want to check is whether or not the user already exists in the database so first we need to imp
+15:34
+the user model from our models so from the top here I will say from flask blog
+15:40
+dot models import user and now go back to our conditional and now we can query
+15:47
+whether the username being submitted to the form is already in our database by
+15:52
+saying of above the conditional here will say user is equal to user dot query
+16:00
+dot filter by and we want to filter by if this username is already in the
+16:07
+database we'll say username is equal to username dot data now this is what's
+16:12
+coming from the form that's what this argument is here and then we'll just get the first value back from the database
+16:19
+so if there is a value then we'll get the first one there if there isn't a
+16:24
+user then that's just going to return none and now we can change our conditional to something that we want to
+16:29
+throw a validation error so if this user exists already then we want to throw the
+16:35
+validation error so I'll get rid of these empty spaces here so we'll just say if user whoops if user then we want
+16:45
+to raise the validation error so basically if user is none then it won't hit this conditional but if user is
+16:52
+anything other than none then it will throw this validation error now the validation message is what gets sent
+16:57
+back to the form so we want to be more specific so that the user knows what actually went wrong so we want to say
+17:03
+that username is taken please choose a
+17:11
+different one and lower case that see there looks a little weird okay so that should be good for our username
+17:17
+validation Oh actually there is one more thing we haven't actually imported this validation error yet so that needs to be
+17:23
+done as well and that is part of the WT forms validator so we can just add that
+17:29
+to the import there so from WT forms dot validators add that validation error
+17:35
+there onto the import okay so that should give us a validation error if the user name is already taken now we want
+17:41
+the email to be unique too so let's make another custom validator for the email
+17:47
+and we can simply copy and paste this one since it will be so similar and I
+17:54
+will paste this in right below here and now we need to change out the field
+18:00
+names here so we can say that we want this to be validate email and also change the argument that we're passing
+18:06
+in there so the email parameter is what we want and now for this we want to make
+18:12
+sure that the email doesn't exist in our database so instead of username equal
+18:17
+equaling user name data we want this to be email equals email dot data and so
+18:24
+the conditional will be the same so if a user exists with that email then we want
+18:29
+to throw a validation error and our message will just say that email is taken please choose a different one so
+18:36
+we'll save that okay and simply by adding those custom validators that should solve our problem and catch that
+18:42
+before we see that ugly error that we saw before so let's go back and reload
+18:47
+our page so okay it looks like our website is still running so that's good so I'll go back to our register form so
+18:55
+we're still on that ugly page there and now let me try to fill out our form with a username and email that is already in
+19:04
+the system so we will fill this out and sign up and we can see that we got
+19:10
+validation errors for both of those this one says that the username is currently taken please choose a different one this
+19:15
+says that the email was taken and two please choose a different one so those are working and we were able to query
+19:21
+our database and tell the user that this username or email was already taken and that they'll need to choose something
+19:27
+different okay so now we have a pretty good registration system now we need to create a login system so that our users
+19:34
+that have created accounts can log in and log out now to do this we're going to be using another flask extension and
+19:40
+this extension is called flask login and it makes it really easy to manage user sessions so first let's install that by
+19:48
+using pip so I'm going to open our command line here and I'm going to shut down server by hitting ctrl C and
+19:56
+clearing this out and we can install this just by saying pip install flask
+20:01
+login and once we have that installed I'll clear the screen here and now let's
+20:07
+add this to our initialization of our application like we've done with our other extensions so I'll open up our
+20:14
+code here and go to our an it dot PI file within our package and just like
+20:20
+our other extensions we can import this and then initialize it so the class that we want to import from this extension
+20:26
+will be so from flask login we want to import the class login manager and now
+20:33
+we can create an instance of that so I'll save that there and down below our other extensions I will say login
+20:40
+manager is equal to login manager and I'll pass in the app into that class ok
+20:47
+so now we're ready to use this login manager in our application so the way that this works is that we add some
+20:54
+functionality to our database models and then it will handle all of the sessions
+20:59
+in the background for us so let's open up our database model so I'll open up this model stop py file here and first
+21:06
+of all we need to import our login manager from our package and that can't comes from the same place as our DB
+21:13
+instance so we can just add that to our import so I will add the login manager
+21:20
+to our imports there from our flash blog package and now we need to create a function with a decorator called user
+21:26
+loader and this is for reloading the user from the user ID stored in this
+21:31
+session and I simply grab this from their documentation on the extensions website so it's not like I've memorized
+21:38
+this it's just one thing that you need to put in place for the extension to work because the extension has to know
+21:44
+how to find one of your users by ID so first let's create this decorated
+21:49
+function so we can create a function called load user that takes a user ID as
+21:56
+an argument so I'll do that now so load user that takes a user ID as our
+22:02
+argument and then we can return the user for that ID and if you remember from a couple of video videos ago we can do
+22:09
+this with the query dot get method so I'll say return user dot
+22:14
+query dot get and we want to get the user with that ID and let's cast that to
+22:20
+an integer just to be sure so we will pass in this user ID here and save that
+22:26
+and now let's decorate this function so that the extension knows that this is the function to get a user by an ID and
+22:33
+we have to use this naming convention so we will say so we'll put the @ sign to
+22:39
+specify a decorator this is going to be login manager dot user underscore loader
+22:46
+okay so we've almost got this extension set up but there's one more thing that we have to do so the extension will
+22:52
+expect your user model to have certain attributes and methods it's going to
+22:57
+expect for to be exact one is called is authenticated which will return true if
+23:03
+they've provided valid credentials another is called is active another is
+23:09
+called is anonymous and the last one is a method called get ID now we could add
+23:15
+all of these ourself but this is so common that the extension provides us with a simple class that we can inherit
+23:22
+from that we'll add all of these required attributes and methods for us so we can simply import this class from
+23:29
+flask login and this class is called user mixin so I'll say from flask
+23:34
+underscore login import user mix in and spell that correctly and save that and
+23:42
+then in our user model we can simply import from this user mix in a class so
+23:48
+I will just pass that in as a class that we inherit from now be sure that you're still inheriting from both DB model and
+23:56
+user mixin you don't want to overwrite the DB model okay so that should be all we need to do with our extension in
+24:03
+order for it to manage our sessions for us so now let's modify the login route so
+24:08
+that we can see how this works so let's pull up our routes again and go to our
+24:13
+login route so before we were simply checking a hard-coded username and
+24:20
+password here but now we're going to be actually checking our database if the
+24:25
+username and password is valid so I'm going to delete what we have within our form validate on submit conditional
+24:33
+here and I'm only going to leave this flash login unsuccessful part so I'll
+24:39
+get rid of the current conditionals that we have and now let's put in our logic for logging in a user so first of all
+24:47
+they'll be logging in with their email so let's query our database to make sure that the user exists so I can say user
+24:55
+is equal to user dot query dot filter by
+25:00
+spell that right and we want to check if the their email is equal to form email
+25:09
+dot data so the data that the user entered into the email form we want to
+25:15
+filter if there are any emails in our database with that same email address and if so we just want to get the first
+25:23
+user back with that email and if there isn't one then it will just return none and now I'm going to create a
+25:29
+conditional that simultaneously checks that the user exists and that their password verifies with what they have in
+25:37
+the database so I will say if user which will make sure that the user that we
+25:42
+just filter by exists and bcrypt dot check password hash and now we want
+25:52
+to compare their database password with the password that they entered into the form so first we pass in the hash
+25:59
+password to this check password hash method so we can just pass in user dot
+26:04
+password and that'll be what comes from the database since this is the database query here and the second value is the
+26:11
+password that they entered into the form so form dot password dot data and save
+26:17
+that now we also need the colon here at the end of our conditional so if the
+26:23
+user exists and the password that they entered is valid with what's in the database then we want to log that user
+26:30
+in so to log them in using our flask login extension we need to import the
+26:36
+login user function so I'll go up here to the top and we can simply say
+26:41
+from flask underscore login import we want to import this login user function
+26:48
+so let's copy this go back down to our conditional and now we'll simply use this function to log the user in so we
+26:56
+can paste this in here and what we want to login this user and also remember
+27:04
+that we have a remember me form and this login user function takes a remember argument as well so we can just say
+27:11
+remember is equal to form dot remember dot data and that's just going to be a
+27:17
+true/false value if they check it then that'll be true if it's unchecked it'll be false okay so that will login the
+27:24
+user and after they're logged in let's now redirect them to the home page so
+27:29
+we'll just say return redirect which we've seen before URL for and we want the URL for the home
+27:38
+page okay and if they submitted the form and it doesn't meet our conditional here
+27:43
+of being a valid email or password then let's just keep this flashed message
+27:49
+here from before that says that the login is unsuccessful and the check the username and password and actually just
+27:56
+realize that or not logging in by username or logging in by email so that should be check email and password so if
+28:03
+we don't hit this conditional here then we just want to flash this message so we'll put in and else and then indent
+28:11
+that flash message into the else block there so if it wasn't a successful login
+28:17
+then they'll never hit this return statement here and they'll just end up down here at the bottom where we're
+28:23
+simply returning the login page okay so let's try this out so let's bring up the
+28:28
+site in the browser and I'll try to log in with the user that we created just a bit ago so if we check our site our
+28:37
+server is not running so I will run that and then pull up the site in the browser
+28:42
+and now let's go to the login page and first let me give it some bad credentials so I'll just say C at demo
+28:49
+dot-com and pass in a random password so we can see that if I log in with a bad
+28:54
+email or password then we can see that we just get kicked back to the login page with
+28:59
+our flashed message that says login unsuccessful please check email and password okay so now let me login with
+29:06
+the password that I chose with the username and password that I chose before so I'll do kori M Schaefer at
+29:12
+gmail.com and that password of testing so let's login so we can see that when I
+29:19
+put in the email and password that's actually in the database then I get redirected to the home page that seemed
+29:24
+to have worked ok so that's good so we're actually logging in users who
+29:29
+exist in our database now there's only a couple of other things that we need to set up here and we'll be finished up
+29:35
+with this part so one thing that's a little strange here is that we're logged in but we can still see our login and
+29:42
+register routes in our navigation bar so if we click on one of those routes that
+29:47
+we can see that we can get back to the login page even though we're already logged in so really if the user is
+29:53
+already logged in and they try to go to the login or register page then we should probably just redirect them back
+29:59
+to the home page because they don't need to be on those pages if they're already logged in to their account so in order
+30:05
+to tell if the user is currently logged in then we can use the current user variable from the flask login extension
+30:13
+so let's go back to our routes and import that so I will open up our routes go up to the top of our import here and
+30:20
+where we're importing from this flask login let's also import current
+30:27
+underscore user and now at the top of both of our login and register routes so
+30:32
+I'll do the register route first at the very top here I will just say if the
+30:38
+current user is authenticated then we
+30:45
+want to return a redirect for the home page so I will do a redirect URL for and
+30:53
+we will send them back to the home page and I will just copy this and paste this
+30:59
+into the top of the login route as well so now let's see what happens when we try to go to the login or register page
+31:06
+if we're already logged in so our web server still so now if I go to the home page and then
+31:12
+try to go back to the login page then we can see we just get redirected to this home page if I click on the register
+31:18
+page then again we just get redirected back to the home page so that's good that conditional and that redirect that
+31:23
+we put in there is working now it's a little strange that we even see those links in our navigation if we're logged
+31:29
+in most websites will replace those with a logout link if you're logged in so
+31:34
+let's create a logout route to logout our user and then we'll display in our navigation when the user is logged in a
+31:42
+logout route so to do this I will go back to our routes and go to the bottom here and now we'll create a logout route
+31:49
+that's going to be pretty short so I'm gonna just grab another route as a starting point here and get rid of these
+31:57
+methods we don't want posts to this route and I will call this route logout
+32:02
+and just like we use the login user function to log the user in we're going
+32:07
+to need to use the logout user function to log the user out so first let's import that so at the
+32:13
+very top here where we imported login user let's also import logout user and go
+32:20
+back down to our logout route and now within this route we can simply just log the user out and this doesn't take any
+32:26
+arguments because it already knows what user is logged in so we can just say log
+32:31
+out underscore user and run that function and once the user is logged out let's redirect them back to the home
+32:38
+page so I will just grab the redirect link for the home page here and paste
+32:44
+that in below our logout user ok and we also want to actually see this logout link in the navigation if the user is
+32:51
+logged in so in this case we'll have to change our layout template where the navigation is created so I will open up
+32:58
+our templates folder here and open up our layout template where those navigation links are which are right
+33:04
+here here are the login and register routes so right where we're creating
+33:09
+these two anchor tags for our login and register routes I'm going to put in a Jinja to conditional and use that same
+33:16
+current user dot is authenticated check that we used before so I will open up
+33:23
+codeblocks here with some curly braces and percent signs and then we can say if
+33:28
+current underscore user dot is authenticated then that means that the
+33:36
+user is logged in and we want to add the logout route and we'll do that in just a second but for now I'm going to put in
+33:44
+our else block and in the else block if they are not authenticated then we want
+33:49
+to show the login and register routes so I will end it those into that code block and now we need to close out this if
+33:58
+statement so curly braces and percent signs and end if okay so now let's copy
+34:05
+one of these links here and paste this into the is authenticated section and
+34:11
+this is where we want to display the logout route so I will change the URL for from login to log out and change the
+34:18
+text from login to log out okay so now let's save this and let's test all of
+34:23
+this out so if we open up the terminal then we had an error for a second there
+34:31
+whenever I saved so let's rerun our server make sure we're not getting any errors okay so our server is running if
+34:37
+I pull up our page here then I'm already logged in and whenever I reloaded the
+34:43
+page we can see that now we get this logout link so let me click on that logout link and as soon as I did we can
+34:49
+see that these change to log in and register so that seems to be logging me in and logging me out let's just make
+34:55
+sure that that login functionality still works as well so I will type in the
+35:01
+credentials of the user I created yep and we can see that now the logout link is displayed in the top right okay so
+35:08
+the last thing that we're going to be learning in this video is how to put a restriction on certain routes so that
+35:13
+you can only go to those routes if you are logged in so you'll see this on certain sites all the time so say that I
+35:20
+click on a link to edit my Twitter profile or something like that if I'm not logged in then it will take me to
+35:27
+the login page and say hey you have to log in first before you can view this page so let's do something like this on
+35:34
+our site so let's create a route for the users account that they can access after they've logged in so
+35:41
+first we have to create this route so I will open our project back up and open
+35:47
+up our routes that py file and go down to add another route here and now I'll
+35:53
+create an account route so I'll copy this section here and paste this in and
+35:58
+instead of log out we want this to be account be sure that you change the function name as well and we're also
+36:04
+going to need a template for this route so we'll create a template called account HTML and we'll create that a
+36:10
+template right now but first let's go ahead and return the template for our
+36:16
+route that we're about to create so I'm just going to copy where we are returning a template up here and then
+36:22
+paste this in and modify it so we want to return an account dot HTML template
+36:30
+that we're going to create in just a second and the title of that page will be account ok and now let's create that
+36:36
+template so within our templates directory I will create a new file and I
+36:41
+will call this account dot HTML now I want a starting point for this template
+36:47
+so I'm just going to open up our about template and copy this code here where we're extending from our layout and
+36:53
+opening our block content section and I'll paste that into our account template but within our content section
+37:00
+of our account template we'll make this super simple for now and just display the current users username so in this h1
+37:07
+tag here instead of saying about page I I'm going to use these double curly braces and print out the current user
+37:15
+dot user name and now let's add a link to this route within our navigation if
+37:22
+the user is logged in and our navigation is located in our layout template we
+37:27
+just saw this so this is going to be visible if the user is logged in so right above our logout link we will copy
+37:35
+that and we will paste in this account link so instead of logged out I'll say
+37:40
+account and the URL here is going to be the URL for account so I'll save that so
+37:46
+now if we check our servers still running we need to reach start that so I would do that now so
+37:52
+restart our server and now if we go back to our page we can see that now we have
+37:57
+this account link here in our navigation and if we click on this account link then we can see that it displays the
+38:04
+current logged in users username but if we go back and log out and then try to
+38:13
+go to this account page then we can see that we don't get anything on this screen and we don't get anything on this
+38:20
+screen because it doesn't have a current user and doesn't know what user name to display so we want to put a check in
+38:27
+place that makes a user login before they can access this account page so to
+38:32
+do that this is extremely easy to do we can use the log-in required decorator
+38:37
+from the flask login extension so if we go back to our routes so I open up our
+38:44
+routes file let's go up here to our imports and from our flask login extension we want to add another import
+38:52
+here and this is going to be login underscore required okay and now I'm
+38:59
+going to copy this login required here and now we can simply add this decorator
+39:04
+to our account route so if I go down to our account route here at the bottom
+39:10
+then I'm gonna simply add another decorator here and that decorator is going to be this login required that we
+39:17
+just imported so now our extension knows that we need to login to access that route but we also need to tell the
+39:24
+extension where our login route is located so to do this we need to go back to our an it dot PI file where we first
+39:32
+initialize this application and right under where we created our instance of the login manager we can set the login
+39:40
+round by saying login manager dot login view and set that equal to our login
+39:48
+view and this will just be login and the view that we pass in here is the function name of our route so it's the
+39:55
+same thing that we would pass in to the URL for function okay so now let's try
+40:01
+this again in our browser so I have saved all of these files that we've changed so I'll pull up our
+40:07
+terminal and our web server is still running so that's good pull up our site and go back to our home page so now I'm
+40:14
+not currently logged in so we can't see the account link up here but I can still type that in manually and go to that
+40:22
+route and if I type that in then we can see that it redirects us to our logout
+40:27
+or login route and it says please log in to access this page so now if I was to log in with the account I've been using
+40:36
+and then submit that then it sends us back to the home page and now if I try
+40:43
+to access that account page again then we can see that we do access that account route and it displays the
+40:49
+current users username okay so there are just two more things that I'd like to do to clean this up a bit so first of all
+40:55
+the flashed message telling us to log in it was pretty ugly you may have noticed that in our video so far we've been
+41:02
+using the flash categories to add a class to those Flash alerts now to do
+41:08
+this within the log in message then we can go back to our an it file here and
+41:14
+then we can just add another line here so I'm going to copy what we have here and this is going to be login manager
+41:20
+dot login underscore message underscore category and now we're going to set that
+41:27
+equal to the category that we want that to be which in our case is what we're using for the bootstrap classes so I'm
+41:33
+just going to set this equal to info for the info class which in bootstrap is just this nicely colored blue
+41:39
+information alert okay now the last thing that I want to do to improve this is when we tried to access the account
+41:46
+page and we were logged out it directed us to the login which is good but after
+41:51
+we logged in it first redirected us back to the home page and we had to access
+41:56
+the account page from there so it would be nice if it would just redirect us back to the page that we were trying to
+42:03
+access before it told us that we had to login and this is easy to do as well now
+42:08
+I don't know if you notice this but when we tried to access the account page and it directed us to the login first it
+42:14
+added a query parameter to the you our L of the page that we are trying to access so let me show what this looked
+42:22
+like so our server is still running so that's good so let me log out and then try to
+42:28
+access this account page so first of all we can see that our flashed message looks better now with that info style
+42:35
+but also if we look here in the URL then we have a query parameter here called
+42:42
+next and it is equal to the route that we were trying to log into before we got
+42:48
+redirected so in our login route let's access that query parameter and if it
+42:54
+exists then we will direct the user there after they login so I'm going to open up our routes here and let's see
+43:02
+open up our routes top py file and go to our login route and actually first thing
+43:07
+we're going to be accessing query parameters and we will need to import the request object from flask so first
+43:14
+let's go to the top and import that and this is going to be from flask so we've already got some imports from flask here
+43:20
+so I'm just going to add on to this and I will import this request object here
+43:26
+and then go back down to our login route so now we want to get this after the user logs in so this login user line
+43:33
+here is where we logged in at the user so then we can get the next parameter
+43:38
+from the URL if it exists by saying something like next page is equal to
+43:44
+request dot args dot get and we want to
+43:50
+get that next parameter now args is a dictionary but you don't want to access
+43:57
+next using the square brackets and key name because that would throw an error if the key doesn't exist and the next
+44:04
+parameter is going to be optional so if we use the get method then it will
+44:10
+simply return none if the next key doesn't exist so be sure that you are using the get method and not the square
+44:16
+brackets with the key like you might be used to so now if that next parameter exists the next page will be equal to
+44:24
+that route but if it doesn't exist the next page is going to be none so
+44:29
+now and the return statement we can do something like this so I will say return
+44:36
+redirect and I'll do a redirect to that next page route if next page which
+44:45
+basically means if it is not none and then we can put in and else here and say
+44:50
+else redirect for the URL for home now some of you might not be familiar with
+44:56
+this and Python but this is called a ternary conditional basically we're just saying redirect to the next page if next
+45:04
+page exists but if it is none or false then just return the redirect to this
+45:10
+home page okay so that should do it for our changes so now let's be sure that we save all of these changes and then pull
+45:17
+up our browser so first I'll check my terminal and we have to restart our web
+45:22
+server here and pull up our browser okay so now we are currently logged out so if
+45:29
+we try to access our account page then it should redirect us to the login page which which it did and now if we log in
+45:38
+with the account that I created before
+45:43
+then we can see that when we login it redirected us to the account page so
+45:49
+that's good that's what we wanted now we also probably want to make sure that it still directs us to the home page if the
+45:54
+next parameter doesn't exist in the URL so let's log out and simply go to the
+46:01
+login page and since we went there directly this next parameter doesn't exist in the URL because we didn't try to access a
+46:08
+page that required a login so now let's log in again and we can see that that
+46:15
+logs us in and directs us to the home page so all of that seems to be working well okay so I think that is going to do
+46:21
+it for this video I hope that now you have a good idea for how you can implement an authorization system like
+46:26
+this on your website and in the next video we'll update the user account page and make it so that users can update
+46:33
+their information and also add an image for their profile picture but if anyone has any questions about what we covered
+46:40
+in this video then feel free to ask in the comment section below I'll do my best to answer those and if you enjoy these tutorials and would like
+46:46
+to support them then there are several ways you can do that these ways to simply like the video and give it a thumbs up and also it's a huge help to
+46:52
+share these videos with anyone who you think would find them useful and if you have the means you can contribute through patreon and there's a link to
+46:57
+that page in the description section below be sure to subscribe for future videos and thank you all for watching
+47:13
+you
