@@ -1,0 +1,260 @@
+ORM(Object relational Mapper) it allows us to access the database we can use the different database without changing the code if you want to use the SQLite database for testing and Postgres database for the production so need to setup the different database in our setting SQLite database for development and Postgres database for the production we can represent the database structure as the classes. classes is called the models.
+
+from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
+
+# Create your models here.
+#we are going to inherit from models.Model. Each class is going to be its
+#own table in the database and now we will create some attributes and each
+#attributes will be a different field in the database 
+class Post(models.Model):
+    #this is going to be the character field and we can set some arguments 
+    #so I can set a max length as 100
+    title = models.CharField(max_length = 100)
+    content = models.TextField()
+    #we can set the argument of (auto_now = True) means date posted in the
+    #date_posted = models.DateTimeField(auto_now = True)
+    #current datetime every time the post was updated 
+    #(auto_now_add = True) this would set the date posted to the current
+    #date time only when this object is created but in auto_now_add argument
+    #we cant ever update the value of the date posted 
+    #so to update the date posted we can use the argument default
+    #we dont need to execute the now function
+    date_posted = models.DateTimeField(default = timezone.now)
+    #Argument need to transfer to the foreign key is related table that is user
+    #second argument is on_delete because we need to tell django what we want 
+    #to do if the user who created the post gets deleted user created the post 
+    #and then the user was deleted then we want to delete the post or do we want 
+    #the author to set to none or what we want to do so if the user was deleted 
+    #we are going to delete their post as well so the argument we want to pass 
+    #in here models.CASCADE says if the user is deleted then we want to delete
+    #their post as well
+    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    #we need to run the migration in order to update the database with any 
+    #changes to make migration
+
+    #python manage.py makemigrations 
+
+    #output:
+    #Migrations for 'App1':
+    #App1\migrations\0001_initial.py
+    #- Create model Post
+
+    #go to the App1/migrations directory we have 0001_initial.py
+    #    operations = [
+    #    migrations.CreateModel(
+    #        name='Post', <<-----Name of the model is the post
+    #App1\migrations\0001_initial.py here App1 is the app name and the 
+    #migration number is 0001 thats how we can view the SQL thats going
+    #to be run so I can take that information run the command in the command 
+    #prompt 
+
+    #python manage.py sqlmigrate App1 0001
+
+    #Output:
+    #BEGIN;
+    #--
+    #-- Create model Post
+    #--
+    #CREATE TABLE "App1_post" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(100) NOT NULL, "content" text NOT NULL, "date_posted" datetime NOT NULL, "author_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+    #CREATE INDEX "App1_post_author_id_46d2b0d0" ON "App1_post" ("author_id");
+    #COMMIT;
+    
+    #it does a create table id field primary key so takes that simple class that 
+    #we have created and it writes out the SQL for all of the fields this reduces 
+    #the effort we dont need to know the SQL to work with the database we just
+    #use the python model class and model.py file and it will wrote the back-end
+    #SQL for us now lets run the migrate command so that it runs the migration 
+    #and this changes takes effect on the actual database 
+    
+    #python manage.py migrate
+    #Output
+    #Operations to perform:
+      #Apply all migrations: App1, admin, auth, contenttypes, sessions
+    #Running migrations:
+      #Applying App1.0001_initial... OK
+    
+    #migration are so useful becouse it allows us to make changes to our database
+    #even after it created and has data in that database but for the SQL code we 
+    #need complicated code
+    
+    #with migration we can simply make whatever changes we need 
+    #run make migration and then run migrate and it will make all of those 
+    #changes for us. now that changes have been added database 
+    
+    #lets see how we can query the database using these models. Django ORM lets
+    #us do this through the classes as well 
+    
+    #lets run the django python shell which will allow us to work with these 
+    #models interactively line by line we can run the shell by saying 
+    
+    #python manage.py shell 
+    #Output
+    #Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
+    #Type 'copyright', 'credits' or 'license' for more information
+    #IPython 8.24.0 -- An enhanced Interactive Python. Type '?' for help.
+    #
+    #In [1]:
+    
+    #Which looks like a python prompt and we can also work with the django object
+    #so lets import post model and user model 
+    
+    #In [2]: from App1.models import Post
+    
+    #In [3]: from django.contrib.auth.models import User
+    
+    #In [4]: User.objects.all()
+    #Out[4]: <QuerySet [<User: newUserKiran>]>
+    
+    #to get the first user
+    
+    #In [5]: User.objects.first()
+    #Out[5]: <User: newUserKiran>
+    
+    #In [6]: User.objects.filter(username = 'newUserKiran')
+    #Out[6]: <QuerySet [<User: newUserKiran>]>
+    
+    #In [7]: User.objects.filter(username = 'newUserKiran').first()
+    #Out[7]: <User: newUserKiran>
+    
+    #Now lets run the program from the start
+    #Now lets save that in the variable
+    
+    #python manage.py migrate 
+    #
+    #In [1]: from App1.models import Post
+    #
+    #In [2]: from django.contrib.auth.models import User
+    #
+    #In [3]: user = User.objects.filter(username = 'newUserKiran').first()
+    #
+    #In [4]: user
+    #Out[4]: <User: newUserKiran>
+    #
+    #In [5]: user.id
+    #Out[5]: 1
+    #
+    #pk for the primary key
+    #In [6]: user.pk
+    #Out[6]: 1
+    
+    #In [7]: user = User.objects.get(id = 1)
+    #
+    #In [8]: user
+    #Out[8]: <User: newUserKiran>
+    
+    #Now lets try the above user newUserKiran as the author of new post 
+    
+    #In [9]: Post.objects.all()
+    #Out[9]: <QuerySet []>
+    #And we can see that we dont have any posts because there are no posts
+    
+    #lets create some post written by this user 
+    
+    #In [10]: post_1 = Post(title = 'Blog 1', content = 'This is the first content!', author = user)
+    
+    #where I have not provided the date for the post in the model we have the 
+    #current date time so it should populated that with the current time if we 
+    #dont provide it again so now lets query our post table again 
+    
+    #In [11]: Post.objects.all()
+    #Out[11]: <QuerySet []>
+    
+    #still empty becouse we have created but not saved in the database we can
+    #save that by
+    #In [12]: post_1.save()
+    
+    #After saving it
+    #In [13]: Post.objects.all()
+    #Out[13]: <QuerySet [<Post: Post object (1)>]>
+    
+    #now we get the one query set with one post object
+    #we have to tell what we have to see when we want to print we can do that 
+    #by the dunder STR method in the models.py as given below
+
+    def __str__(self):
+        return self.title
+    
+    #double underscore methods they are also called magic methods or special
+    #methods so back in the command line so we need to exit and rerun the shell 
+    #by the command 
+
+    #exit
+    #python manage.py shell
+
+    #reimport 
+
+    #C:\Users\kiran\OneDrive\Desktop\Code\new_project>python manage.py shell
+    #Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
+    #Type 'copyright', 'credits' or 'license' for more information
+    #IPython 8.24.0 -- An enhanced Interactive Python. Type '?' for help.
+    #
+    #In [1]: from App1.models import Post
+    #
+    #In [2]: from django.contrib.auth.models import User
+
+    #In [3]: Post.objects.all()
+    #Out[3]: <QuerySet [<Post: Blog 1>]>
+
+    #Above code shows the title of the post which is created above 
+    #and we have set how it must show like showing the title
+
+    #Lets bring the user
+    #In [4]: user = User.objects.filter(username = 'newUserKiran').first()
+
+    #In [5]: user
+    #Out[5]: <User: newUserKiran>
+
+    #Lets create a new post for the user we can also use the id
+    #post_2 = Post(title = 'Blog 2', content = 'Second Post Content', author_id = user.id)
+
+    #so to save this to the database 
+    #In [7]: post_2.save()
+
+    #In [8]: Post.objects.all()
+    #Out[8]: <QuerySet [<Post: Blog 1>, <Post: Blog 2>]>
+
+    #To get the first post
+    #In [9]: post = Post.objects.first()
+
+    #In [10]: post.content
+    #Out[10]: 'This is the first content!'
+
+    #In [11]: post.date_posted
+    #Out[11]: datetime.datetime(2024, 6, 5, 7, 10, 36, 789408, tzinfo=datetime.timezone.utc)
+
+    #In [12]: post.author
+    #Out[12]: <User: newUserKiran>
+
+    #In [13]: post.author.email
+    #Out[13]: 'userKiran123@gmail.com'
+
+    #In [14]: user
+    #Out[14]: <User: newUserKiran>
+    #
+    #In [15]: user.post_set
+    #Out[15]: <django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager at 0x16331392d50>
+    #
+    #In [16]: user.post_set.all()
+    #Out[16]: <QuerySet [<Post: Blog 1>, <Post: Blog 2>]>   
+
+    #So author of these two posts is that user
+
+    #if we want to create the third post directly using the user 
+
+    #In [17]: user.post_set.create(title = 'blog 3', content = 'This is the third content.')
+    #Out[17]: <Post: blog 3>  
+
+    #We have not specified the author for the post django knows that we want
+    #to create the post for that users post which means it automatically 
+    #creates them the author we dont need to run dot save and anything
+    #like that either it automatically save that to the database if I 
+    #query all of our posts again 
+
+    #In [3]: Post.objects.all()
+    #Out[3]: <QuerySet [<Post: Blog 1>, <Post: Blog 2>, <Post: blog 3>]>
+
+    
+
+

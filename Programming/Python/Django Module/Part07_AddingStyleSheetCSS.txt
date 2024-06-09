@@ -1,0 +1,14 @@
+Lets create the few customs styles which are not the bootstrap specific in the main.css static files like css and javascript need to be located in the static directory within our app
+
+App1(app folder) -create-> static(folder) -create-> App1(app folder with same name) -create-> main.css
+main.css link:
+https://github.com/CoreyMSchafer/code_snippets/blob/master/Django_Blog/snippets/main.css
+
+in order to include the css file to the base.html so go to the base.html 
+above the '<!DOCTYPE html>' provide the code
+{% load static %}
+
+below the bootstrap css href is where this css file is located and above the title if else statement
+<link rel = "stylesheet" type = "text/css" href = "{% static 'App1/main.css' %}">
+
+try to run server again for the better result

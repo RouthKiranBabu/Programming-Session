@@ -1,0 +1,89 @@
+Home.html and about.html has the similar repeated code where we need store the common code in one of the html page and the unique codes will be stored in the home and about html file to accomplish this we use the template inheritance. 
+
+go the App1(startapp folder) -> templates -> App1(folder) lets create the base.html file lets this have the code which is present in both home and about html page
+------------------About page has-----------------------
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>Django blog - {{ title }}</title>
+        {% else %}
+        <title>Django blog</title>
+        {% endif %}
+    </head>
+    <body>
+        <h1>This is the About content.</h1>
+    </body>
+</html>
+-------------------------Home page has-----------------
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>Django blog - {{ title }}</title>
+        {% else %}
+        <title>Django blog</title>
+        {% endif %}
+    </head>
+    <body>
+        {% for post in Posts %}
+        <h1>{{ post.title }}</h1>
+        <h2>By {{ post.content }} on {{ post.date_posted }}.</h2>
+        <p>{{ post.content }}</p>
+        {% endfor %}
+    </body>
+</html>
+-------------------------Common lines------------------------------
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>Django blog - {{ title }}</title>
+        {% else %}
+        <title>Django blog</title>
+        {% endif %}
+    </head>
+    <body>
+
+    </body>
+</html>
+-----------------------Uncommon Code in about.html--------------------------------
+<h1>This is the About content.</h1>
+-----------------------Uncommon Code in home.html--------------------------------
+        {% for post in Posts %}
+        <h1>{{ post.title }}</h1>
+        <h2>By {{ post.content }} on {{ post.date_posted }}.</h2>
+        <p>{{ post.content }}</p>
+        {% endfor %}
+----------------------------------------------------------------------------------
+
+Now lets use the template inheritance
+------------------------------base.html------------------------------
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>Django blog - {{ title }}</title>
+        {% else %}
+        <title>Django blog</title>
+        {% endif %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>
+------------------------------home.html------------------------------
+{% extends "App1/base.html" %}
+{% block content %}
+    {% for post in Posts %}
+    <h1>{{ post.title }}</h1>
+    <h2>By {{ post.content }} on {{ post.date_posted }}.</h2>
+    <p>{{ post.content }}</p>
+    {% endfor %}
+{% endblock content %}
+------------------------------about.html------------------------------
+{% extends "App1/base.html" %}
+{% block content %}
+    <h1>This is the About content.</h1>
+{% endblock content %}
+----------------------------------------------------------------------

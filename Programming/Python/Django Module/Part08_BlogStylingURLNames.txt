@@ -1,0 +1,57 @@
+To split the post in the home page(home.html)
+and the css is already have the style for that just need to put the current HTML
+Link for the article.html which provides the html and css for the specific blog:
+https://github.com/CoreyMSchafer/code_snippets/blob/master/Django_Blog/snippets/article.html
+So copy this article.html in the home.html for loop
+---------------------home.html---------------------
+{% extends "App1/base.html" %}
+{% block content %}
+    {% for post in Posts %}
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+----------------------------------------------------
+now reload the home page
+
+to make the template better and more flexible so in the base.html so the
+navigation bar is from the <nav to the </nav which is below the header 
+class = "site-header" we have 
+<a class="nav-item nav-link" href="/">Home</a> 
+can be converted to 
+<a class="nav-item nav-link" href="{% url 'App1 - Home' %}">Home</a> 
+which comes from the app url(urlpatterns)
+path("", views.home, name = "App1 - Home"), 
+which shows the use of the name(name are unique)
+So finally the section looks like 
+----------------------------------------------
+<div class="container">
+<a class="navbar-brand mr-4" href="{% url 'App1 - Home' %}">Django Blog</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarToggle">
+<div class="navbar-nav mr-auto">
+<a class="nav-item nav-link" href="{% url 'App1 - Home' %}">Home</a>
+<a class="nav-item nav-link" href="{% url 'App1 - About' %}">About</a>
+</div>
+<!-- Navbar Right Side -->
+----------------------------------------------
+So only three things change where we have to provide the href 
+<a class="navbar-brand mr-4" href="{% url 'App1 - Home' %}">Django Blog</a>
+<a class="nav-item nav-link" href="{% url 'App1 - Home' %}">Home</a>
+<a class="nav-item nav-link" href="{% url 'App1 - About' %}">About</a>
+----------------------------------------------
+
+we have not created the routes for the login and register
+<a class="nav-item nav-link" href="#">Login</a>
+<a class="nav-item nav-link" href="#">Register</a>
+

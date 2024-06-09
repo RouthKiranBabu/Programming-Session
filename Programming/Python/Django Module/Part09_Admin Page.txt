@@ -1,0 +1,63 @@
+Admin page is the great way to see the nice GUI for creating updating or deleting data present at: localhost:8000/admin
+
+to create a superuser login to admin page
+go to the location where manage.py is present in the command prompt
+
+python manage.py createsuperuser
+
+we got the error for above code like at last line shows hint
+no such table: auth_user 
+
+means haven't created the database table for project. so need to run the few migration command which apply changes to the database 
+one migration command will create the database and add a bunch of default tables for us and this auth_user is one of those tables that is going to get created
+
+python manage.py makemigrations
+its output: No changes detected
+
+python manage.py migrate
+
+output
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+
+Now lets create the superuser by the command
+
+python manage.py createsuperuser
+
+output:
+Username (leave blank to use 'kiran'): newUserKiran
+Email address: userKiran123@gmail.com
+Password: 
+Password (again):
+12345678asd
+Superuser created successfully.
+
+now run the server by 
+
+python manage.py runserver
+
+go to the http://127.0.0.1:8000/admin/
+
+Username: newUserKiran
+Password: 12345678asd
+
+which leads to the site administration having groups and users
+click on the word groups which shows 0 groups 
+we you click on the Authentication and Authorization(Home > Authentication and Authorization > group) then we go back to the 
+Authentication and Authorization
+if you click on the Users we get the username newUserKiran
+if you click on the username newUserKiran we get more details
+
+now click on the Users between (Authentication and Authorization) and newUserKiran 
+we can actually add the user when you click on the top right corner where we have ADD USER with plus sign
+
+click on the ADD USER 
+Provide the username, password and password confirmation
+and after that click on the save and continue editing button
+provide email, staff status means that this person at the bottm we also have the access to delete this new user. Save.
+
+My action says about what changes we have done to the users plus sign says that we have created the user pencil icon for the editing the user and added their email address 

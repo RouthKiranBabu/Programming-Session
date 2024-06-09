@@ -1,0 +1,73 @@
+#A single project can have multiple apps
+#Stay where the manage.py is present 
+#Now to start the app we can use the command 
+python manage.py startapp app_start1
+
+#Now go to -> app_start1 -> views.py
+#Create the function which handles the traffic from the home page of the
+#blog app(app_start1) this function is going to take the request argument 
+from django.shortcuts import render
+from django.http import HttpResponse 
+#Create your views here.
+def home(request):
+    return HttpResponse('<h1>Blog Home</h1>')
+
+Now within the blog app directory(app_start1) we are going to create a new file 
+and I am going to the urls.py which is similar to the urls.py in the 
+django_project which has
+from django.contrib import admin
+from django.urls import path
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+so in the urls.py of app_start1 write the code as
+from django.urls import path 
+from . import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+from . import views: where . means it is from the current directory
+
+#In the app_start1 modified urls
+from django.urls import path 
+from . import views 
+urlpatterns = [
+    path('', views.home, name = "blog-home"),
+]
+
+#Now in the django_project urls
+from django.contrib import admin
+from django.urls import path
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+#Modified portions
+from django.urls import path, include
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('app_start1.urls')),
+]
+
+#Now adding the about page
+#Adding the about function in the app_start1 views
+from django.shortcuts import render
+from django.http import HttpResponse 
+# Create your views here.
+def home(request):
+    return HttpResponse('<h1>Blog Home</h1>')
+def about(request):
+    return HttpResponse('<h1>Blog About</h1>')
+#Updating the app urls
+from django.urls import path 
+from . import views 
+urlpatterns = [
+    path('', views.home, name = "blog-home"),
+    path('about', views.about, name = "blog-about"),
+]
+#Updating the project urls
+from django.contrib import admin
+from django.urls import path, include
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('app_start1.urls')),
+]

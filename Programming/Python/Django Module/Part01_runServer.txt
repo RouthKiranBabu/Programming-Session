@@ -1,0 +1,64 @@
+#At first lets install the django by the command prompt 
+pip install django
+#Output
+'''
+Requirement already satisfied: django in c:\users\kiran\appdata\local\programs\python\python312\lib\site-packages (5.0.4)
+Requirement already satisfied: asgiref<4,>=3.7.0 in c:\users\kiran\appdata\local\programs\python\python312\lib\site-packages (from django)
+'''
+
+#to see the version of the django 
+python -m django --version
+#Output
+#5.0.4
+
+#to know the list of subcommands
+django-admin
+#Output
+'''
+Type 'django-admin help <subcommand>' for help on a specific subcommand.
+Available subcommands:
+[django]
+    check
+    compilemessages
+    createcachetable
+    ...
+     startproject
+    test
+    testserver
+Note that only Django core commands are listed as settings are not properly configured (error: Requested setting INSTALLED_APPS, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.).
+'''
+
+#So we are most often going to learn through the startproject of the admin 
+
+#To create the Project from django with the name django_project
+django-admin startproject django_project
+#Output inside the folder django_project
+#which has files and folders
+
+'''
+Drag the project in the editor for the programming, wsgi.py is how the python 
+web application and the web server communicate so django has set up the default 
+wsgi configuration for us
+'''
+
+#To run the server. Go to the path where the manage.py python file in the terminal 
+#run the following command. Copy the server link and paste it in the crome
+python manage.py runserver
+#Output 
+Watching for file changes with StatReloader
+Performing system checks...
+System check identified no issues (0 silenced).
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+June 01, 2024 - 11:49:18
+Django version 5.0.4, using settings 'django_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+#127.0.0.1 is the localhost so server also run at: http://localhost:8000/
+#where port is 8000
+
+#We also have the admin route(Provide additional /admin): 
+http://localhost:8000/admin
+
+#Stop the server by: ctrl + c

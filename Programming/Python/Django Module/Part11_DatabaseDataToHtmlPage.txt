@@ -1,0 +1,48 @@
+Go to the App1(app folder) -> views.py where we have the dummy data post like 
+posts = [
+    {
+        'name': 'Author1',
+        'title': 'title1',
+        'date_posted': 'June 5, 2024',
+        'content': 'This is content 1.'
+    },
+    {
+        'name': 'Author2',
+        'title': 'title2',
+        'date_posted': 'June 2, 2024',
+        'content': 'This is content 2.'
+    }
+]
+
+so lets add the post data instead so lets import post by
+from .models import Post
+
+and change the context which is present in the home
+context = {
+	'posts': Post.objects.all()
+}
+
+in the home.html change post.name as post.author as from the previous part10 
+
+dates is not in the same format as the dummy data
+formatting link: https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date
+
+go to the home.html in the templates folder 
+<small class="text-muted">{{ post.date_posted }}</small>
+will be changed to 
+<small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+
+now there no need to use the dummy data variable like posts list of dictionaries
+
+now go to App1(startapp folder) -> admin.py
+this is where we can register our models and they can show up in the admin page we need to import the model by
+from .models import Post
+
+and now to register this model with our admin site we use the code
+admin.site.register(Post)
+
+now go to: http://127.0.0.1:8000/admin/
+and reload that then we will get 
+Posts in the APP1
+click on the Posts letter then we will get all the posts and click on that posts where we get all the data
+then we can manually change the data for all the posts and we can also change the author this changes also shows on the home page

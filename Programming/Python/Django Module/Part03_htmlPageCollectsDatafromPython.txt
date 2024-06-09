@@ -1,0 +1,99 @@
+Django by default looks for the templates to create a template it must in this order
+appfolder -> templates(name of the folder) -> appfolder -> where we have the templates 
+appfolder name must be same as the appfolder name
+inside the templates add the html pages like home.html, about.html etc
+
+go to appfolder(newApp1) -> apps.py -> copy the appconfig class name (eg: Newapp1Config). Now paste it at 
+go to projectfolder -> settings.py -> INSTALLED_APP list -> add element 'Newapp1.apps.Newapp1Config' to the list
+
+go to newApp1 -> views.py -> replace[HttpResponse] to [render(request, 'newApp1/home.html')]
+don't have to import the HttpResponse
+
+go to newApp1 -> urlpatterns list -> change add slash like 'about/'
+eg: path("about/", views.about, name = "app1 - About"), in the urlpatterns list
+urlpatterns = [
+    path("", views.home, name = "app1 - Home"),
+    path("about/", views.about, name = "app1 - About"),
+]
+
+Now lets create the dummy post at the views.py of the appfolder(newApp1) above the home function
+posts = [
+    {
+        'author': 'NewAuthor1',
+        'title': 'Title1',
+        'content': 'Content1',
+        'date_posted': 'June 2, 2024'
+    },
+    {
+        'author': 'NewAuthor2',
+        'title': 'Title2',
+        'content': 'Content2',
+        'date_posted': 'June 3, 2024'
+    }
+]
+
+inside the home function we need to create the context dictionary like 
+context = {
+        'posts': posts
+    }
+and context becomes the third argument for the render of the home so finally 
+def home(request):
+    context = {
+        'posts': posts
+    }
+    return render(request, 'newApp1/home.html', context)
+
+Now into the home.html present in the templates which has 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HomeTitle</title>
+    </head>
+    <body>
+        <h1>App Home</h1>
+    </body>
+</html>
+
+changes to the we can access the values from the context 'posts' is the key where we use in the context dictionary we passed in
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HomeTitle</title>
+    </head>
+    <body>
+        {% for post in posts %}
+            <h1>{{ post.title }}</h1>
+            <p>By {{ post.author }} on {{ post.date_posted }}</p>
+            <p>{{ post.content }}</p>
+        {% endfor %}
+    </body>
+</html>
+
+we can also use the if else statement if title is not given then it gives the Django blog. In the head section 
+    <head>
+        {% if title %}
+        <title>Django blog - {{ title }}</title>
+        {% else %}
+        <title>Django blog</title>
+        {% endif %}
+    </head>
+
+
+About function is given as in the App1(startapp folder) -> views.py
+def about(request):
+    return render(request, 'App1/about.html', {'title': 'AboutTitle'})
+
+In the about.html file
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>Django blog - {{ title }}</title>
+        {% else %}
+        <title>Django blog</title>
+        {% endif %}
+    </head>
+    <body>
+        <h1>This is the About content.</h1>
+    </body>
+</html>
