@@ -1,0 +1,8 @@
+To install the module:
+-pip install beautifulsoup4
+
+Also install:
+-pip install lxml
+-pip install html5lib
+-pip install requests
+
