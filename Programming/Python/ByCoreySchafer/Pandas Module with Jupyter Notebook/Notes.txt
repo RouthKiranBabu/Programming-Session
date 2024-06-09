@@ -1,0 +1,10 @@
+Data From: https://survey.stackoverflow.co/
+Then Extract all and rename into dataYYYY
+
+website:https://jupyter.org/install
+To install jupyter notebook from command prompt use the following commands:
+pip install jupyterlab
+Install the classic Jupyter Notebook with:
+pip install notebook
+To run the notebook:
+jupyter notebook
