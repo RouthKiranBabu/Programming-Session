@@ -1,0 +1,6 @@
+Mymodule.py is the module created which has function like find_index which finds index and we can use that
+if we call this module by importing the Mymodule as a module.
+
+If this python file is present in the current path then you can directly import this module otherwise need 
+to use the os to check Current Working Directory and sys to append the path where module is present and 
+then you can use the module.
