@@ -1,0 +1,149 @@
+#Installing module use the command prompt or terminal in VSCode
+pip install pipenv
+
+#Go into the my_project
+cd my_project
+
+#Lets use pipenv in the my_project for installing requests
+pipenv install requests
+#Output
+Creating a virtualenv for this project...
+Pipfile: C:\Users\kiran\OneDrive\Desktop\ScriptLearn\Learn Python\58_Pipenv - Easily Manage Packages and Virtual Environments\Pipfile
+Using default python from C:\Users\kiran\AppData\Local\Programs\Python\Python312\python.exe (3.12.3) to create virtualenv...
+[    ] Creating virtual environment...created virtual environment CPython3.12.3.final.0-64 in 548ms
+  creator CPython3Windows(dest=C:\Users\kiran\.virtualenvs\58_Pipenv_-_Easily_Manage_Packages_and_Vir-dt0hkpkS, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, via=copy, app_data_dir=C:\Users\kiran\AppData\Local\pypa\virtualenv)
+    added seed packages: pip==24.0
+  activators BashActivator,BatchActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+
+Successfully created virtual environment!
+Virtualenv location: C:\Users\kiran\.virtualenvs\58_Pipenv_-_Easily_Manage_Packages_and_Vir-dt0hkpkS
+Creating a Pipfile for this project...
+Installing requests...
+Resolving requests...
+Added requests to Pipfile's [packages] ...
+Installation Succeeded
+Pipfile.lock not found, creating...                                                                                                                                              
+Locking [packages] dependencies...
+Building requirements...
+Resolving dependencies...
+Success!
+Locking [dev-packages] dependencies...                                                                                                                                           
+Updated Pipfile.lock (1977acb1ba9778abb66054090e2618a0a1f1759b1b3b32afd8a7d404ba18b4fb)!
+Installing dependencies from Pipfile.lock (18b4fb)...
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+
+#From above output which creates two files(Pipfile, Pipfile.lock)
+
+#Now run the Programs
+pipenv shell
+#Output
+Launching subshell in virtual environment...
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+#Now run python import sys and use sys.executable to check wether it is using the virtualenvs or not
+python -> import sys -> sys.executable
+#Output
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> sys.executable
+'C:\\Users\\kiran\\.virtualenvs\\my_project-YmOhv98N\\Scripts\\python.exe'
+
+#And try to import requests
+
+#Now if we want to deactivate the environment type only exit in the command prompt
+exit
+
+#We can use the environment to run the python
+pipenv run python 
+#Output
+#At the Command prompt
+PS C:\Users\kiran\OneDrive\Desktop\ScriptLearn\Learn Python\58_Pipenv - Easily Manage Packages and Virtual Environments\my_project> pipenv run python
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> sys.executable
+'C:\\Users\\kiran\\.virtualenvs\\my_project-YmOhv98N\\Scripts\\python.EXE'
+exit()
+
+#We can also use -> pipenv run python script.py
+
+#To install the required packages list provided from requirements.txt
+#if you run that file by
+pipenv install -r ../snippets/requirements.txt 
+#After installing it will present in the Pipfile
+#Output at Pipfile 
+[packages]
+requests = "*"
+django = "==2.1"
+django-crispy-forms = "==1.7.2"
+pillow = "==5.2.0"
+pytz = "==2018.5"
+
+#installing in the dev 
+pipenv install pytest --dev 
+#Output at Pipfile 
+[dev-packages]
+pytest = "*"
+
+#For uninstalling packages 
+pipenv uninstall requests
+#Output
+Removing requests from Pipfile.lock...
+Removed requests from Pipfile category packages
+Uninstalling requests...
+
+#For running the python
+pipenv --python 3.6
+pipenv run python 
+#Output
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> sys.executable
+'C:\\Users\\kiran\\.virtualenvs\\my_project-YmOhv98N\\Scripts\\python.EXE'
+>>> exit()
+
+#Now in the Pipfile try to change
+#From
+[requires]
+python_version = "3.12"
+#To
+[requires]
+python_version = "3.7"
+
+#To remove the virtual environment
+pipenv --rm
+
+pipenv install
+
+pipenv --venv
+#Output
+No virtualenv has been created for this projectC:\Users\kiran\OneDrive\Desktop\ScriptLearn\Learn Python\58_Pipenv - Easily Manage Packages and Virtual Environments\my_project 
+yet!
+Aborted!
+
+pipenv check 
+
+#Change the version of Packages in Pipfile
+#Run the code
+pipenv install 
+#Now to check all good 
+pipenv check 
+pipenv graph 
+
+pipenv lock
+pipenv install --ignore-pipfile
+
+#Create .env file where we have SECRET_KEY = "MySuperSecretKey"
+#In Command prompt: pipenv run python(Make sure in Pipfile requires python version 3.12)
+import os 
+os.environ['SECRET_KEY']
+#Output
+'MySuperSecretKey'
+
