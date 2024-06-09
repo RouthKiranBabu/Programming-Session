@@ -1,0 +1,2 @@
+face_identifier="C:/Users/user/Desktop/Minor Project/My things/xml file/haarcascade_frontalface_default.xml"
+eye_identifier="C:/Users/user/Desktop/Minor Project/My things/xml file/haarcascade_eye.xml"
