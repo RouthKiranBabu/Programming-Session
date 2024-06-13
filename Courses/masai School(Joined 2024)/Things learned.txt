@@ -22,3 +22,6 @@ download github link:
 https://git-scm.com/download/win
 ReleaseNotes.html:
 file:///C:/Program%20Files/Git/ReleaseNotes.html
+
+to visualize the code(click next to see which line executes first):
+https://pythontutor.com/
