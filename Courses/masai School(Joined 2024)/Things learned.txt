@@ -14,3 +14,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript
 typing test Known:
 RATATYPE
 https://www.ratatype.com/
+
+For visual studio code with github:
+video link: https://youtu.be/i_23KUAEtUM?si=gWC7_yqGQT65t9IF
+install as it is mostly press next for installing github
+download github link:
+https://git-scm.com/download/win
+ReleaseNotes.html:
+file:///C:/Program%20Files/Git/ReleaseNotes.html
