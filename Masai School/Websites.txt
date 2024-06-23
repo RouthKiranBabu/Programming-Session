@@ -1,6 +1,9 @@
 Dashboard:
 https://students.masaischool.com/
 
+Canva:
+https://www.canva.com/projects
+
 LeetCode:
 https://leetcode.com/problemset/?difficulty=EASY&page=1
 
