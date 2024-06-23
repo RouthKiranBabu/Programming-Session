@@ -4,6 +4,9 @@ https://students.masaischool.com/
 LeetCode:
 https://leetcode.com/problemset/?difficulty=EASY&page=1
 
+MDN Web Docs:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript
+
 My Course: Software Testing & Automation
 https://dashboard.masaischool.com/courses/15/details
 
@@ -15,9 +18,6 @@ https://pfpmaker.com/
 
 Codepen:
 https://codepen.io/trending
-
-MDN Web Docs:
-search like: gradient MDN
 
 Google Fonts:
 https://fonts.google.com/
