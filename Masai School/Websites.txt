@@ -1,6 +1,9 @@
 Dashboard:
 https://students.masaischool.com/
 
+Aptitude:
+https://masaischool.com/msat/syllabus
+
 Canva:
 https://www.canva.com/projects
 
