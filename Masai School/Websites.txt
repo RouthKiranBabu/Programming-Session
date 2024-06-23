@@ -28,17 +28,14 @@ https://fonts.google.com/
 Self learning Course:
 https://masaischool.com/learn
 
-New App known:
 zoom:
 https://zoom.us/
 slack:
 https://slack.com/intl/en-in/downloads/windows
 
-Website Known:
 MDN web docs:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript
 
-typing test Known:
 RATATYPE
 https://www.ratatype.com/
 
