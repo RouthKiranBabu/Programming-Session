@@ -7,6 +7,9 @@ https://leetcode.com/problemset/?difficulty=EASY&page=1
 MDN Web Docs:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript
 
+W3 School:
+https://www.w3schools.com/howto/default_page4.asp
+
 My Course: Software Testing & Automation
 https://dashboard.masaischool.com/courses/15/details
 
