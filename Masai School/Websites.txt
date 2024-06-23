@@ -10,6 +10,9 @@ https://www.canva.com/projects
 LeetCode:
 https://leetcode.com/problemset/?difficulty=EASY&page=1
 
+HackerRank:
+https://www.hackerrank.com/dashboard
+
 MDN Web Docs:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript
 
