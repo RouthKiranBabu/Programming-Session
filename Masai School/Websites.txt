@@ -13,6 +13,9 @@ https://leetcode.com/problemset/?difficulty=EASY&page=1
 HackerRank:
 https://www.hackerrank.com/dashboard
 
+CodeinGame:
+https://www.codingame.com/home
+
 MDN Web Docs:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript
 
