@@ -1,0 +1,45 @@
+My Course: Software Testing & Automation
+https://dashboard.masaischool.com/courses/15/details
+
+Sprint Plan
+https://lookerstudio.google.com/u/0/reporting/82cd6839-8bf8-4be9-b237-d96d36bfc8a5/page/QHo9C
+
+Professional Profile Image:
+https://pfpmaker.com/
+
+Codepen:
+https://codepen.io/trending
+
+MDN Web Docs:
+search like: gradient MDN
+
+Google Fonts:
+https://fonts.google.com/
+
+Self learning Course:
+https://masaischool.com/learn
+
+New App known:
+zoom:
+https://zoom.us/
+slack:
+https://slack.com/intl/en-in/downloads/windows
+
+Website Known:
+MDN web docs:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript
+
+typing test Known:
+RATATYPE
+https://www.ratatype.com/
+
+For visual studio code with github:
+video link: https://youtu.be/i_23KUAEtUM?si=gWC7_yqGQT65t9IF
+install as it is mostly press next for installing github
+download github link:
+https://git-scm.com/download/win
+ReleaseNotes.html:
+file:///C:/Program%20Files/Git/ReleaseNotes.html
+
+to visualize the code(click next to see which line executes first):
+https://pythontutor.com/
