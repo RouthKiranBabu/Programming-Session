@@ -1,6 +1,9 @@
 Dashboard:
 https://students.masaischool.com/
 
+LeetCode:
+https://leetcode.com/problemset/?difficulty=EASY&page=1
+
 My Course: Software Testing & Automation
 https://dashboard.masaischool.com/courses/15/details
 
