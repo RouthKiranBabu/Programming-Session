@@ -1,6 +1,9 @@
 Dashboard:
 https://students.masaischool.com/
 
+Assignment:
+https://drive.google.com/drive/folders/1FHbjGOC4c1n_CJ3AFzENn0E9SirL0bPr
+
 Aptitude:
 https://masaischool.com/msat/syllabus
 
