@@ -135,6 +135,16 @@ lst.insert(1, newlst); print(lst)
 #Output
 #[['1', '2'], [True, False, False, True, True], [3, 4, 5], [6.54, 7.45, 8.12, 9.45]]
 
+#Old elements goes right
+arr = [1, 4, 3]
+arr.insert(0, 2)
+print(arr)
+arr.insert(0, 5)
+print(arr)
+#Output
+#[2, 1, 4, 3]
+#[5, 2, 1, 4, 3]
+
 #To get the value int 3
 print(lst[2][0]); print("Integer list at {}, 3 at {} of type is {}.".format(2, 0, type(lst[2][0])))
 #Output
