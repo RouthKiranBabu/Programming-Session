@@ -181,6 +181,13 @@ popvalue = lst.pop(); print(popvalue, lst)
 #Output
 #3 [1, 2]
 
+#Removing element based on index
+lst = [1, 4, 3]
+retval = lst.pop(1)
+print(retval, lst)
+#Output
+#4 [1, 3]
+
 lstint = [1, 3, 2]; print("Use of Reverse", lstint, sep = '\n')
 #Use of Reverse
 returnvalue = lstint.reverse(); print(lstint, returnvalue, '\n\nUse of list.sort')
