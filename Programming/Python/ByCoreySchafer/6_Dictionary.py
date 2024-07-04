@@ -132,3 +132,18 @@ Save World!
 print(len(Hacker))
 #Output
 #2
+
+di = {"a" : 5}
+print(di.get("a"))
+#Output
+#5
+
+# Number of times(as values) the string(as key) is present
+strng = list("adfadfg")
+unmp = {}
+for i in strng:
+    # Get will take the key and returns the value
+    unmp[i] = unmp.get(i, 0) + 1
+print(unmp)
+#Output
+#{'a': 2, 'd': 2, 'f': 2, 'g': 1}
