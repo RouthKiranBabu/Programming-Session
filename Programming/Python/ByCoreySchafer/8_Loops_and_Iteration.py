@@ -156,3 +156,11 @@ while True:
 20
 Stops here.
 '''
+
+st = "this"
+for x in reversed(st): print(x)
+#Output
+#s
+#i
+#h
+#t
