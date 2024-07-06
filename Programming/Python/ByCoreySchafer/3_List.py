@@ -289,6 +289,13 @@ jndval = '_'.join(lst); print(jndval)
 #Output
 #one_two_three
 
+#Make sure join is used for list of string not list of interger
+lst = ["2", "1"]
+val = ", ".join(lst)
+print(val)
+#Output
+#2, 1
+
 #Split is used for the creating sentence to the list
 strval = "This is the sentence."
 sptval = strval.split(' '); print(sptval)
