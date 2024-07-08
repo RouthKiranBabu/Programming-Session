@@ -65,6 +65,12 @@ print(playlist[0 : 2])
 #Output
 #['Engineering Mathematics', 'Network Theory']
 
+lst = [x for x in range(13, 17)]
+print(lst)
+print(*lst[-2:])
+#Output
+#15 16
+
 #To check what inside the list
 print(dir(list))
 #Output
