@@ -57,6 +57,9 @@ file:///C:/Program%20Files/Git/ReleaseNotes.html
 to visualize the code(click next to see which line executes first):
 https://pythontutor.com/
 
+To open Doc:
+doc.new
+
 Links to explore
 As discussed in the scrum today here are the accounts that you can refer to surround yourself with some important tech updates around the world.
 Youtube Accounts:
