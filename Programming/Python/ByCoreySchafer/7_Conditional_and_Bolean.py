@@ -51,3 +51,8 @@ else:
 True for element is present.
 True for 1, 10, and -1.
 '''  
+
+if "a" > "b": print("a < b")
+else: print("a > b")
+#Output
+#a > b
