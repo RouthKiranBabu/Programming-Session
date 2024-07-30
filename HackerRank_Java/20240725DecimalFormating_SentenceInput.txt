@@ -1,0 +1,44 @@
+[Decimal Formatting]
+import java.text.DecimalFormat;
+
+public class DecimalFormatting {
+    public static void main(String[] args){
+        double num = 1234567890.98765546;
+
+        DecimalFormat df1 = new DecimalFormat("##,##.000");
+        DecimalFormat df2 = new DecimalFormat("###,###.00");
+        DecimalFormat df3 = new DecimalFormat("0.0%");
+
+        String st1 = df1.format(num);
+        String st2 = df2.format(num);
+        String st3 = df3.format(num);
+
+        System.out.println("St1: " + st1);
+        System.out.println("St2: " + st2);
+        System.out.println("St3: " + st3);
+    }
+}
+/*
+St1: 12,34,56,78,90.988
+St2: 1,234,567,890.99
+St3: 123456789098.8%
+*/
+
+Sentence Input:
+import java.util.Scanner;
+
+public class SentenceInput{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the large string: ");
+        String stri = scan.nextLine();
+        System.out.println("You Entered: " + stri);
+        scan.close();
+    }
+}
+/*
+Enter the large string: 
+This is the sentence.
+You Entered: This is the sentence.
+*/
+

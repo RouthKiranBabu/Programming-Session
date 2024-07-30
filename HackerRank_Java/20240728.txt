@@ -1,0 +1,77 @@
+1. Program for taking input and showing the Output
+import java.util.Scanner; 
+import java.text.DecimalFormat;
+
+public class Main{
+    public static void main(String[] args){
+        DecimalFormat df1 = new DecimalFormat("##,##.000");
+        DecimalFormat df2 = new DecimalFormat("###,###.00");
+
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter the integer: " );
+        int i = scan.nextInt();
+        scan.nextLine();
+
+        System.out.print("Enter Double: ");
+        double d = scan.nextFloat();
+        scan.nextLine();
+
+        System.out.print("Enter The string: ");
+        String s = scan.nextLine();
+        scan.close();
+
+        System.out.println("Integer: " + i);
+        String st1 = df1.format(d);
+        String st2 = df2.format(d);
+        System.out.println("Double: " + d);
+        System.out.println("Double format 1: " + st1);
+        System.out.println("Double format 2: " + st2);
+        System.out.println("String: " + s);
+    }
+}
+/*Enter the integer: 12
+Enter Double: 21.45345345
+Enter The string: This is sentence.
+Integer: 12
+Double: 21.453453063964844
+Double format 1: 21.453
+Double format 2: 21.45
+String: This is sentence. */
+
+2. Program for the print formatting 
+import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        for (int i = 0; i < 3; i++){
+            String s = scan.next();
+            int it = scan.nextInt();
+            System.out.println("Start");
+            /* string comes first and then space if - is available
+             * 15 character of string, %s for string, %d for integer
+             * %n for new line
+            */
+            System.out.printf("%-15s%4d%n", s, it);
+            // %04d for 4 decimal length
+            System.out.printf("%15s%04d%n", s, it);
+            System.out.println("End");
+        }
+    }
+}
+/*
+first 1
+Start
+first             1
+          first0001
+End
+second 2
+Start
+second            2
+         second0002
+End
+third 3
+Start
+third             3
+          third0003
+End
+ */

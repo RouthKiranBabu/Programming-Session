@@ -1,0 +1,45 @@
+Problem1:
+import java.util.Scanner;
+/*
+Things new Learned: 
+1. integer to string
+2. Math.pow takes doubles so add this to integer to get integer
+To check the version in the terminal use [java --version] or [java -version]
+Equation: (a + b) (a + b.(2^1)) (a + b.(2^2)) (a + b.(2^3)) 
+
+Input: 
+2
+0 2 10
+5 3 5
+
+Output:
+2 6 14 30 62 126 254 510 1022 2046
+8 14 26 50 98
+*/
+public class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        String[] s = new String[n];
+        int i;
+        for (i = 0; i < n; i ++){
+            int a = scan.nextInt();
+            int b = scan.nextInt();
+            int l = scan.nextInt();
+            int res = a + b;
+            String str = Integer.toString(res);
+            for (int j = 0; j < l - 1; j ++){
+                double two = 2;
+                double p = j + 1;
+                res += b * Math.pow(two, p);
+                str += " " + res;
+            }
+            s[i] = str;
+            scan.nextLine();
+        }
+        scan.close();
+        for (i = 0; i < n; i ++){
+            System.out.println(s[i]);
+        }
+    }
+}
