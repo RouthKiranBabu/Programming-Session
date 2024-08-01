@@ -1,0 +1,134 @@
+Problem1: Check is there any input available at next
+//importing scanner to take input
+import java.util.Scanner;
+
+public class Solution{
+    public static void main(String[] args){
+        // just provided some value instead of taking input from user
+        Scanner scanner = new Scanner("one two three!");
+
+        //hasnext is used to check is there any value in the upcomming line
+        //this while loop happens until it reaches end or if there is no
+        //input left in scanner
+        while(scanner.hasNext()){
+            //some integer for index
+            int index = 1;
+            System.out.println(index + ". " + scanner.next());
+            //lets increment index by one
+            index += 1;
+        }
+
+        //its good to close the scan
+        scanner.close();
+    }
+}
+
+Problem2: Program to check the next value type and then doing with that type 
+//importing scanner to take input
+import java.util.Scanner;
+
+public class Solution{
+    public static void main(String[] args){
+        // just provided some value instead of taking input from user
+        //instead of simple text lets add double and integer
+        Scanner scanner = new Scanner("1.23 5 three!");
+
+        //hasnext is used to check is there any value in the upcomming line
+        //this while loop happens until it reaches end or if there is no
+        //input left in scanner
+        while(scanner.hasNext()){
+            //now lets check what there in next is it double, integer or string
+            //This is to check is there any integer at next
+            if (scanner.hasNextInt()){
+                //if theres a integer than lets print something
+                //lets create a variable to store integer
+                int i = scanner.nextInt();
+                System.out.println("Integer-> " + i);
+            }
+            // now let's check for the double
+            else if (scanner.hasNextDouble()){
+                //if its a double then print the double 
+                //before that lets store it in variable
+                double d = scanner.nextDouble();
+                System.out.println("Double-> " + d);
+            }
+            //Now its time for the text
+            else if (scanner.hasNext()){
+                String s = scanner.next();
+                System.out.println("String-> " + s);
+            }
+        }
+
+        //its good to close the scan
+        scanner.close();
+    }
+}
+
+Problem3: Use ctrl + c to stop providing input and then see then see 
+the output
+import java.util.Scanner; 
+public class Solution{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int index = 1;
+        String s = new String();
+        while(scan.hasNextLine()){
+            s += index + " " + scan.nextLine() + "\n";
+            index += 1;
+        }
+        System.out.println(s);
+        scan.close();
+    }
+}
+
+Problem:If both values are greater than zero, then the main method must output the area of the parallelogram. Otherwise, print "java.lang.Exception: Breadth and height must be positive" without quotes.
+Sample input 1
+1
+3
+Sample output 1
+3
+Sample input 2
+-1
+2
+Sample output 2
+java.lang.Exception: Breadth and height must be positive
+Solution:
+import java.io.*;
+import java.util.*;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int l = scan.nextInt();
+        int b = scan.nextInt();
+        if (l > 0 && b > 0){
+            System.out.println(l * b);
+        }else{
+            System.out.println("java.lang.Exception: Breadth and height must be positive");
+        }
+        scan.close();
+    }
+}
+
+Problem:
+You are given an integer , you have to convert it into a string.
+Please complete the partially completed code in the editor. 
+If your code successfully converts n into a string s the code will print "Good job". Otherwise it will print "Wrong answer".
+ can range between -100 to 100 inclusive.
+Solution:
+import java.io.*;
+import java.util.*;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        try{
+            String s = Integer.toString(n);
+            System.out.println("Good job");
+        }catch (Exception e){
+            System.out.println("Wrong answer");
+        }
+        scan.close();
+    }
+}
+
+Problem: about calender
