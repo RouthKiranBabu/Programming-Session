@@ -1,0 +1,34 @@
+// Java Currency Formatter: https://www.hackerrank.com/challenges/java-currency-formatter/problem?isFullScreen=false
+import java.util.Scanner;
+import java.util.Locale;
+import java.text.NumberFormat;
+import java.text.DecimalFormat;
+public class Solution {
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner scanner = new Scanner(System.in);
+        double amount = scanner.nextDouble();
+        scanner.close();
+
+        NumberFormat usformat = NumberFormat.getCurrencyInstance(Locale.US);
+        String usamt = usformat.format(amount);
+        System.out.println("US: " + usamt);
+
+        // NumberFormat indformat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+        // String indamt = indformat.format(amount);
+        // System.out.println("India: " + indamt);
+
+        DecimalFormat df = new DecimalFormat("###,###.00");
+        String indamt = df.format(amount);
+        System.out.println("India: Rs." + indamt);
+
+        NumberFormat chformat = NumberFormat.getCurrencyInstance(Locale.CHINA);
+        String chamt = chformat.format(amount);
+        System.out.println("China: " + chamt);
+        
+        NumberFormat frformat = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+        String framt = frformat.format(amount);
+        System.out.println("France: " + framt);
+    }
+}
+
